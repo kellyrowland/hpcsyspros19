@@ -1,0 +1,6 @@
+acmart-master/
+*.aux
+*.log
+*.out
+*.pdf
+
