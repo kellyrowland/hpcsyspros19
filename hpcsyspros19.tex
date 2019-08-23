@@ -19,11 +19,6 @@
 
 \title{What Deploying MFA Taught Us About Changing Infrastructure}
 
-\author{Kelly L.\ Rowland}
-\orcid{https://orcid.org/0000-0001-5147-0051}
-\affiliation{National Energy Research Scientific Computing Center (NERSC)}
-\email{kellyrowland@lbl.gov}
-
 \author{Abe Singer}
 \affiliation{National Energy Research Scientific Computing Center (NERSC)}
 \email{abe@lbl.gov}
@@ -35,6 +30,11 @@
 \author{Rebecca Hartman-Baker}
 \affiliation{National Energy Research Scientific Computing Center (NERSC)}
 \email{rjhartmanbaker@lbl.gov}
+
+\author{Kelly L.\ Rowland}
+\orcid{https://orcid.org/0000-0001-5147-0051}
+\affiliation{National Energy Research Scientific Computing Center (NERSC)}
+\email{kellyrowland@lbl.gov}
 
 \author{David Skinner}
 \affiliation{National Energy Research Scientific Computing Center (NERSC)}
@@ -79,20 +79,39 @@ abstract
 \maketitle
 
 \section{Introduction}
+\label{intro}
 
 lorem ipsum MFA
 
-\section{Goals}
+\section{Goal}
+\label{goal}
 
 lorem ipsum MFA
 
 \section{Requirements}
+\label{reqs}
 
 lorem ipsum MFA \cite{xie2013fast, diffie1977special}
 
 \section{Solutions}
+\label{solns}
 
-lorem ipsum MFA
+lorem ipsum MFA \cite{m2011totp, habets2011, redhat2019}
+
+\subsection{Technical Design of MFA Implementation}
+\label{design}
+
+\subsubsection{User Experience Implementation Design}
+\label{user}
+
+\subsubsection{Infrastructure Design}
+\label{infra}
+
+\subsection{Social Aspects}
+\label{social}
+
+\subsubsection{User Engagement and Education}
+\label{engage}
 
 \begin{figure*}[h]
   \centering
@@ -101,7 +120,20 @@ lorem ipsum MFA
   \Description{User enrollment in MFA in 2018, from initial rollout to mandatory requirement.}
 \end{figure*}
 
+\subsubsection{Automation and Operations}
+\label{auto}
+
+\paragraph{sshproxy}
+\label{proxy}
+
+\paragraph{Host-based Authentication}
+\label{host}
+
+\paragraph{Exemptions and Edge Cases}
+\label{edge}
+
 \section{Conclusions and Future Work}
+\label{conc}
 
 lorem ipsum MFA
 
