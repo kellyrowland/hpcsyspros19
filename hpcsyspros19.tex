@@ -412,7 +412,7 @@ using their personal account and MFA credentials, but the generated key maps to
 the collaboration account.
 
 % respond to comment #2
-An alternative to sshproxy is to use OpenSSH's built-in control master functionality.
+An alternative to sshproxy is to use OpenSSH's built-in control master functionality \cite{openssh}.
 This allows multiple sessions to reuse a connection.  The main disadvantage of this
 approach is once the control connection is severed (e.g. a network issue, login node
 reboot, etc), the session must be reauthenticated.  So this is less useful for automated
