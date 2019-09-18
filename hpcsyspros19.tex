@@ -117,7 +117,7 @@ scientific computing infrastructures.
 
 As we were not under a formal mandate for MFA, we were not constrained by
 prescriptive standards, so we had the freedom to implement our solution in a
-manner that best supports our users’ scientific needs. In the remainder of this
+manner that best supports our users' scientific needs. In the remainder of this
 paper, we describe the goals of the MFA project at NERSC, detail specific
 requirements imposed on the project by the communities supported at NERSC,
 present technical and social solutions that were developed through the course of
@@ -137,8 +137,8 @@ workflows comes with requirements in need of unique solutions described below.
 \section{Requirements}
 \label{reqs}
 
-NERSC’s unique position as the primary scientific computing facility for the
-Office of Science means that NERSC’s diverse user base performs a wide variety
+NERSC's unique position as the primary scientific computing facility for the
+Office of Science means that NERSC's diverse user base performs a wide variety
 of different computational workflows using NERSC resources. This includes
 anything from simple SSH sessions where a user submits jobs by hand to
 elaborate, multistep, automated workflows. Because of this, first and foremost
@@ -213,7 +213,7 @@ NERSC conducted a series of user testing exercises prior to finalizing the
 implementation choices.  NERSC had approximately 60 users, consisting of both
 staff and user volunteers, work through the process of registering a token and
 using MFA in their regular routine.  This prototype was not fully integrated
-with the account management system so didn’t cover the full user experience, but
+with the account management system so didn't cover the full user experience, but
 it gave us feedback that both helped us solidify the technology choices and
 helped us identify typical issues encountered by users.  It also helped in
 identifying workflows or use cases that were particularly problematic with MFA.
@@ -273,7 +273,7 @@ operational staff built in redundancy, monitoring, and emergency controls to
 mitigate this risk. First, the MFA infrastructure was built with a redundant
 ``shared-nothing'' design, enabling components to fail or be taken offline for
 maintenance non-disruptively. Then, a complete suite of real-time checks were
-added to NERSC’s center-wide monitoring framework that continuously exercise the
+added to NERSC's center-wide monitoring framework that continuously exercise the
 MFA backend, performing authentication on frequent intervals and producing
 alerts for Operations to dispatch to staff. As a last resort, the system was
 designed with a ``kill switch'' capability that can be quickly activated by
@@ -317,12 +317,12 @@ is being checked.
   \label{mfa-diagram}
 \end{figure*}
 
-Another infrastructure design goal was to minimize the impact of MFA on users’
+Another infrastructure design goal was to minimize the impact of MFA on users'
 ability to conduct their research, particularly for users with complex workflows
 that may require data transfer into or out of NERSC. MFA by its nature impedes
 automated workflows, as it requires a user to enter a new password with each
 connection. While the MFA policy allows for exemptions to the requirement in
-cases where MFA would have a significant impact on a user’s scientific work,
+cases where MFA would have a significant impact on a user's scientific work,
 NERSC wanted to minimize the number of users who had MFA exemptions. A key NERSC
 innovation, sshproxy, described in detail in Section \ref{proxy}, was
 instrumental to achieving this goal. sshproxy allows users to use MFA to obtain
@@ -348,7 +348,7 @@ minimizing the impact to users and ensuring that automated workflows continued
 to function. A number of projects rely on NERSC to provide automated analysis of
 data coming from various instruments and detectors.  Many of these use cases are
 tied to other user facilities that have their own set of users and metrics, and
-changes in NERSC’s policies can impact these facilities.  Many of these
+changes in NERSC's policies can impact these facilities.  Many of these
 automated use cases were already using SSH as the underlying method to transfer
 data and trigger the execution of analysis pipelines.  Clearly, requiring a user
 to enter a one-time password for each of these operations was not feasible.
@@ -387,11 +387,11 @@ libraries and many Windows-based SSH clients such as PuTTY.  It has been tested
 with Windows, OSX, and Linux.  While the service can generate signed
 certificates that are honored by NERSC systems, the service also supports a
 fallback mechanism for older clients that may not support these certificates.
-This fallback mechanism makes use of OpenSSH’s \textit{AuthorizedKeysCommand}
+This fallback mechanism makes use of OpenSSH's \textit{AuthorizedKeysCommand}
 which allows the server to run an executable to get the list of valid authorized
 keys.  In our case, this script makes a request to the sshproxy service to get
 the list of currently active keys for the user.  The service can also generate
-keys to access ``collaboration accounts’’ which are shared accounts primarily
+keys to access ``collaboration accounts'' which are shared accounts primarily
 used by large collaborations and projects.  In this case, the user authenticates
 using their personal account and MFA credentials, but the generated key maps to
 the collaboration account.
@@ -486,7 +486,7 @@ factors of the technologies are just as important as their technical merits. To
 implement a change of this magnitude, high-quality, frequent communication with
 users is crucial. Second, technology choices that minimize the additional load
 on staff and users alike are essential. Finally, implementing a new technology
-should minimize changes in users’ daily routines. If the burden of a new
+should minimize changes in users' daily routines. If the burden of a new
 requirement is too high, users will look for ways to circumvent it. Thus, we
 introduced the NERSC sshproxy service lessen user and staff burden and better
 enable scientific computing workflows.
