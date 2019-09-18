@@ -149,6 +149,13 @@ requirements are largely hidden from the users, so we could not afford to create
 a cumbersome process that would not accommodate automation in these special
 workflows.
 
+% Shane added this to respond to comment #3.
+Unlike many other HPC sites, NERSC does not require users to hop through a
+gateway system or connect to a VPN to access resources.  This direct access model 
+is critical for many complex workflows and users have applauded this ease of access in the past.
+Because of this direct access model, NERSC could not simply implement MFA on some
+perimeter system instead it needed to be integrated throughout the center.
+
 Another important factor in the technologies we chose to use in the MFA project
 was flexibility. Any particular authentication technology could eventually have
 fundamental vulnerabilities discovered, or weaknesses in the underlying
@@ -299,7 +306,7 @@ connectivity issues.  To address this, NERSC developed an intermediate service,
 OTPProxy, that sits between the clients and the LinOTP service.  This service
 performs the LDAP authentication portion of MFA and then sends the one-time
 password portion to the LinOTP service.  If the proxy is set in a ``fail-open''
-mode and detects an error in the response,such as connection error, it can
+mode and detects an error in the response, such as a connection error, it can
 ignore the OTP portion and still permit the login.  This approach also helps
 prevent cases where the user gets locked out of their account because of too
 many failed attempts due to an issue in the OTP server.  This also provides a
@@ -307,7 +314,10 @@ single place in which we can temporarily disable the OTP check without having to
 push out any changes to the clients.  NERSC has used this feature when the
 LinOTP service has scheduled maintenance.  The users continue to authenticate
 with the password plus one-time password, but are unaware that only the password
-is being checked.
+is being checked.  The prompt and user action is the same during the failure event.
+This is advantageous for the user as they do not need to change their behavior.
+The OTPProxy service is not currently openly released since it is fairly specialized
+to our enviorrnment, but can be opened if there is interest.
 
 \begin{figure*}[h!]
   \centering
@@ -357,8 +367,13 @@ requiring them to enter their one-time password each time impacts their
 productivity.  NERSC required a solution that would allow users and robot
 accounts to access systems via SSH but with strict controls on the lifetime of
 the access and other limits.  NERSC developed a RESTful-based service called
-sshproxy to generate and maintain SSH keys to help meet these requirements. The
+sshproxy to generate and maintain SSH keys to help meet these requirements. 
+This allows a user to generate a long-lived key that can be used in automated workflow 
+for an extended period of time (potentially up to a year).  The user only needs to authenticate
+with their password and token when they generate the key.  The
 sshproxy architecture is shown in Figure \ref{sshproxy-diagram}.
+Workflows that already relied on SSH were able to easily convert over to using
+the long-lived keys without any changes to their process or workflows.
 
 \begin{figure}[h!]
   \centering
@@ -396,9 +411,16 @@ used by large collaborations and projects.  In this case, the user authenticates
 using their personal account and MFA credentials, but the generated key maps to
 the collaboration account.
 
+% respond to comment #2
+An alternative to sshproxy is to use OpenSSH's built-in control master functionality.
+This allows multiple sessions to reuse a connection.  The main disadvantage of this
+approach is once the control connection is severed (e.g. a network issue, login node
+reboot, etc), the session must be reauthenticated.  So this is less useful for automated
+workflows or even laptop access where the network connection may change.
+
 The sshproxy service has become a key component of the overall NERSC MFA
 architecture.  The software has been approved for public release and NERSC is
-planning to make it public in the near future.
+planning to make it public in the near future, hopefully by the end of 2019.
 
 \begin{figure*}[ht!]
   \centering
