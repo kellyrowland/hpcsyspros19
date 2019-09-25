@@ -317,7 +317,7 @@ with the password plus one-time password, but are unaware that only the password
 is being checked.  The prompt and user action is the same during the failure event.
 This is advantageous for the user as they do not need to change their behavior.
 The OTPProxy service is not currently openly released since it is fairly specialized
-to our enviorrnment, but can be opened if there is interest.
+to our enviornment, but can be opened if there is interest.
 
 \begin{figure*}[h!]
   \centering
@@ -414,8 +414,8 @@ the collaboration account.
 % respond to comment #2
 An alternative to sshproxy is to use OpenSSH's built-in control master functionality \cite{openssh}.
 This allows multiple sessions to reuse a connection.  The main disadvantage of this
-approach is once the control connection is severed (e.g. a network issue, login node
-reboot, etc), the session must be reauthenticated.  So this is less useful for automated
+approach is that once the control connection is severed (e.g., a network issue, login node
+reboot, etc.), the session must be reauthenticated.  So this is less useful for automated
 workflows or even laptop access where the network connection may change.
 
 The sshproxy service has become a key component of the overall NERSC MFA
@@ -572,7 +572,33 @@ Regards,
 Richard Gerber
 
 \subsubsection{Email from Data Department Head}
-pending approval
+{\em Data Department Head Katie Antypas sent the following note to NERSC users
+on December 12, 2018.}
+
+Dear NERSC Users,
+
+Perhaps, like me, you’ve put off enabling Multi-Factor Authentication (MFA) for your NERSC account until the last possible moment.  Well that time is approaching, and yesterday I decided that I too should bite the bullet and enable MFA.  And it really wasn’t hard!!  I strongly encourage you to enable MFA now, so that if you do have any issues you will have time to get your questions answered before MFA becomes required on January 8, 2019.  
+
+To provide some hard data to the NERSC user community I timed myself while setting it up.  I’m not super fast at these things and even including a few urgent Slack messages and an inbound photo text of my cute nieces, I still managed to set up MFA in 13 minutes.  I wanted to set up sshproxy keys so I would only have to enter my one-time-password one time per day, and I managed to get that enabled in an additional 7 minutes.  
+
+If you'd like to have some help, the NERSC consultants will be holding MFA "office hours"  each week through January 8 (excepting the holidays).  During those times you can join a zoom session where several people will be available in real-time to help you get set up. The dates for the office hours are December 17th, January 4, and January 7, 8, and 9. For more information on office hours please see \url{https://www.nersc.gov/users/announcements/featured-announcements/mfa-office-hours-in-december-and-january/}
+
+On January 8th, if you have not enabled MFA, you will not be able to login into NERSC resources until you log into NIM and set up at least one MFA token.  
+
+NERSC is committed to making MFA work with the many diverse use cases and workflows of our users.  We have enabled and developed several technologies to minimize how often you need to use MFA.  And for those who have long-lived workflows, we can give you the ability to get sshproxy keys that last longer than a day.
+
+As noted above, setting up MFA is pretty easy.  The basic steps are:
+
+\begin{enumerate}
+\item Install the Google Authenticator app on your mobile device.
+\item Login to NIM enable MFA
+\item Create your One-Time Password token in NIM.
+\item Scan the QR code presented using the Google Authenticator App.
+\item You're done!
+\end{enumerate}
+
+For detail instructions, example, and more, please see our MFA documentation at
+\url{https://www.nersc.gov/users/connecting-to-nersc/mfa}
 
 \subsection{Outreach through the NERSC User Group}
 
