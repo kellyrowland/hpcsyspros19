@@ -312,9 +312,9 @@ prevent cases where the user gets locked out of their account because of too
 many failed attempts due to an issue in the OTP server.  This also provides a
 single place in which we can temporarily disable the OTP check without having to
 push out any changes to the clients.  NERSC has used this feature when the
-LinOTP service has scheduled maintenance.  The users continue to authenticate
+LinOTP service has scheduled maintenance; users continue to authenticate
 with the password plus one-time password, but are unaware that only the password
-is being checked.  The prompt and user action is the same during the failure event.
+is being checked. The prompt and user action is the same during the failure event.
 This is advantageous for the user as they do not need to change their behavior.
 The OTPProxy service is not currently openly released since it is fairly specialized
 to our environment, but can be opened if there is interest.
@@ -364,14 +364,16 @@ data and trigger the execution of analysis pipelines.  Clearly, requiring a user
 to enter a one-time password for each of these operations was not feasible.
 Additionally, many users will log into NERSC system many times a day and
 requiring them to enter their one-time password each time impacts their
-productivity.  NERSC required a solution that would allow users and robot
+productivity. 
+
+NERSC required a solution that would allow users and robot
 accounts to access systems via SSH but with strict controls on the lifetime of
 the access and other limits.  NERSC developed a RESTful-based service called
 sshproxy to generate and maintain SSH keys to help meet these requirements. 
-This allows a user to generate a long-lived key that can be used in automated workflow 
-for an extended period of time (potentially up to a year).  The user only needs to authenticate
-with their password and token when they generate the key.  The
-sshproxy architecture is shown in Figure \ref{sshproxy-diagram}.
+This allows a user to generate a long-lived key that can be used in automated
+workflow for an extended period of time (potentially up to a year). The user
+only needs to authenticate with their password and token when they generate the key.
+The sshproxy architecture is shown in Figure \ref{sshproxy-diagram}.
 Workflows that already relied on SSH were able to easily convert over to using
 the long-lived keys without any changes to their process or workflows.
 
@@ -405,21 +407,23 @@ fallback mechanism for older clients that may not support these certificates.
 This fallback mechanism makes use of OpenSSH's \textit{AuthorizedKeysCommand}
 which allows the server to run an executable to get the list of valid authorized
 keys.  In our case, this script makes a request to the sshproxy service to get
-the list of currently active keys for the user.  The service can also generate
+the list of currently active keys for the user. The service can also generate
 keys to access ``collaboration accounts'' which are shared accounts primarily
-used by large collaborations and projects.  In this case, the user authenticates
+used by large collaborations and projects. In this case, the user authenticates
 using their personal account and MFA credentials, but the generated key maps to
 the collaboration account.
 
 % respond to comment #2
-An alternative to sshproxy is to use OpenSSH's built-in control master functionality \cite{openssh}.
-This allows multiple sessions to reuse a connection.  The main disadvantage of this
-approach is that once the control connection is severed (e.g., a network issue, login node
-reboot, etc.), the session must be reauthenticated.  So this is less useful for automated
-workflows or even laptop access where the network connection may change.
+An alternative to sshproxy is to use OpenSSH's built-in \textit{ControlMaster}
+functionality \cite{openssh}, which allows multiple sessions to reuse a
+connection. The main disadvantage of this approach is that once the control
+connection is severed (e.g., a network issue, login node
+reboot, etc.), the session must be reauthenticated.  So, this is less useful
+for automated workflows or even laptop access where the network connection may
+change.
 
 The sshproxy service has become a key component of the overall NERSC MFA
-architecture.  The software has been approved for public release and NERSC is
+architecture. The software has been approved for public release and NERSC is
 planning to make it public in the near future, hopefully by the end of 2019.
 
 \begin{figure*}[ht!]
@@ -453,8 +457,8 @@ system and no additional changes are required on the target systems.
 While the combination of the sshproxy service and host-based authentication has
 addressed most use cases, some examples have emerged that still require further
 work.  For example, one project has a series of remote sensing devices that are
-extremely difficult to access and make updates to.  NERSC has an MFA exemption
-process to ensure these projects can continue to function and NERSC is working
+extremely difficult to access and update. NERSC has an MFA exemption
+process to ensure these projects can continue to function and is working
 to further enhance the sshproxy tool to address these edge cases.
 
 \subsection{Social Aspects}
@@ -470,19 +474,24 @@ process ahead of the deadline.
 
 Figure \ref{uptake} shows the number of NERSC users enrolled in MFA over 2018;
 key points spurring MFA uptake are annotated on the plot. To meet and eventually
-exceed our goal of 1,000 users enrolled in MFA by January 2019, we took a multi-
-pronged approach to user communications which included personalized messages,
-targeted engagements, and open office hours.
+exceed our goal of 1,000 users enrolled in MFA by January 2019, we took a
+multi-pronged approach to user communications which included personalized messages,
+targeted engagements, and open office hours. Appendix \ref{comms} provides
+detail regarding the various user communications, including the texts of
+emails sent out to NERSC users and links to NERSC publications promoting
+early adoption of MFA.
 
 NERSC conducted an extensive communications campaign along several fronts. The
 User Engagement Group (UEG) developed thorough, clear documentation for users on
 how to enroll and use MFA. The campaign to inform users of the plan kicked off
 in August 2018 with an announcement by the NERSC Director that MFA would become
-mandatory in the new allocation year. Over the following months department heads
-sent memos to users encouraging enrollment and testifying to the ease of use,
+mandatory in the new allocation year. Over the following months, department heads
+sent memos to users encouraging enrollment and testifying to the ease of use
+(see Section \ref{email}),
 and NERSC published profiles on the NERSC website of users who had successfully
 transitioned to using MFA, which included a discussion of their research and the
-minimal impact of MFA on their workflows. In November and December 2018, UEG
+minimal impact of MFA on their workflows (see Section \ref{pubs}).
+In November and December 2018, UEG
 reached out to projects with high usage and low MFA enrollment, encouraging them
 to enroll before the deadline and offering help if there were any questions. UEG
 included reminders and announcements of new features in the NERSC weekly
@@ -491,11 +500,16 @@ held several rounds of virtual ``office hours'' where support staff spent the
 day online in a video conference room, and users could dial in and ask
 questions.
 
-Emails from NERSC management resulted in upticks in adoption of MFA. As the
+Emails from NERSC management resulted in upticks in adoption of MFA, and as the
 deadline approached, many users embraced the inevitable and signed up. Most
 users were able to transition to MFA without NERSC assistance, but we helped
 more than 100 users during the office hours in the final days before and
-immediately following the deadline.
+immediately following the deadline. Many of these users experienced minor
+difficulties with creating and installing an MFA token; staff who were
+familiar with the process were able to successfully guide users through the
+initial setup process. In some individual cases where a user was not able to
+use a smartphone for MFA, NERSC staff assisted the users in finding solutions
+that were suited to their environment.
 
 \section{Summary}
 \label{summary}
@@ -507,11 +521,13 @@ NERSC staff took home a variety of lessons from the project. First, the social
 factors of the technologies are just as important as their technical merits. To
 implement a change of this magnitude, high-quality, frequent communication with
 users is crucial. Second, technology choices that minimize the additional load
-on staff and users alike are essential. Finally, implementing a new technology
+on staff and users alike are essential. We found great value in using robust 
+open-source components, such as LinOTP, where we could and developing tailored
+solutions like sshproxy where necessary. Finally, implementing a new technology
 should minimize changes in users' daily routines. If the burden of a new
 requirement is too high, users will look for ways to circumvent it. Thus, we
-introduced the NERSC sshproxy service lessen user and staff burden and better
-enable scientific computing workflows.
+introduced the NERSC sshproxy service to lessen both user and staff burden and
+better enable scientific computing workflows.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{hpcsyspros19}
@@ -519,14 +535,17 @@ enable scientific computing workflows.
 \appendix
 
 \section{Communications to Users about MFA}
-NERSC used many different avenues of communication to reach out to users about the upcoming transition to MFA. In this 
-appendix we detail some of those communications.
+\label{comms}
+NERSC used many different avenues of communication to reach out to users about
+the impending transition to MFA. In this appendix, we detail some of those
+communications.
 
 \subsection{Email Communications}
+\label{email}
 
 NERSC launched an aggressive communications campaign over email to encourage
 users to adopt MFA. Regular communication about MFA was included in the NERSC
-weekly email and NERSC user engagement staff also enlisted the help of upper
+weekly email, and NERSC user engagement staff also enlisted the help of upper
 management in communicating the importance of the transition to MFA. Staff
 wrote memos that leadership adapted to their writing style and sent to users.
 
@@ -541,7 +560,7 @@ I’m writing to communicate an upcoming change in how user accounts will be aut
 
 I have authorized this policy change to protect the integrity of your data, accounts, and allocations and to align NERSC with best practices in HPC and the online world in general.  MFA provides greater protection against phishing and other modern threats to your digital security.  NERSC makes security largely transparent to users, but we need your help to ensure there is not unauthorized access to your account and data.
 
-NERSC experts have been working hard to implement MFA in ways that minimally impacts how you work at NERSC. For example, we’ve created technologies that allow you to authenticate with MFA only once per day as well as incorporate  MFA into automated workflows.  The policy also allows for longer periods of single sign-on access, or opting-out of MFA where reasonably justified. You can read more about how this works here.
+NERSC experts have been working hard to implement MFA in ways that minimally impacts how you work at NERSC. For example, we've created technologies that allow you to authenticate with MFA only once per day as well as incorporate  MFA into automated workflows.  The policy also allows for longer periods of single sign-on access, or opting-out of MFA where reasonably justified. You can read more about how this works here.
 
 In the next few weeks you will receive communications from our Security and User Engagement staff with pointers to additional information about transitioning to MFA across all NERSC resources. I encourage you to pay attention to these communications and try MFA well before the new allocation year begins. And of course, NERSC staff are always happy to answer any questions or help troubleshoot issues at https://help.nersc.gov .
 
@@ -569,7 +588,7 @@ Thank you for your assistance in helping keep your data and NERSC secure.
 
 Regards,
 
-Richd Gerber
+Richard Gerber
 
 \subsubsection{Email from Data Department Head}
 {\em Data Department Head Katie Antypas sent the following note to NERSC users
@@ -577,7 +596,7 @@ on December 12, 2018.}
 
 Dear NERSC Users,
 
-Perhaps, like me, you’ve put off enabling Multi-Factor Authentication (MFA) for your NERSC account until the last possible moment.  Well that time is approaching, and yesterday I decided that I too should bite the bullet and enable MFA.  And it really wasn’t hard!!  I strongly encourage you to enable MFA now, so that if you do have any issues you will have time to get your questions answered before MFA becomes required on January 8, 2019.  
+Perhaps, like me, you've put off enabling Multi-Factor Authentication (MFA) for your NERSC account until the last possible moment.  Well that time is approaching, and yesterday I decided that I too should bite the bullet and enable MFA.  And it really wasn't hard!!  I strongly encourage you to enable MFA now, so that if you do have any issues you will have time to get your questions answered before MFA becomes required on January 8, 2019.  
 
 To provide some hard data to the NERSC user community I timed myself while setting it up.  I’m not super fast at these things and even including a few urgent Slack messages and an inbound photo text of my cute nieces, I still managed to set up MFA in 13 minutes.  I wanted to set up sshproxy keys so I would only have to enter my one-time-password one time per day, and I managed to get that enabled in an additional 7 minutes.  
 
@@ -601,14 +620,20 @@ For detail instructions, example, and more, please see our MFA documentation at
 \url{https://www.nersc.gov/users/connecting-to-nersc/mfa}
 
 \subsection{Outreach through the NERSC User Group}
+\label{nug}
 
-The NERSC User Group (NUG) monthly webinar was another venue where we exposed users to MFA.
-The September 20, 2018 webinar included a discussion of NERSC's plans for the new allocation year and how to use sshproxy. (URL: \url{https://www.nersc.gov/assets/Uploads/NUG-Webinar-20180920.pdf})
-The November 1, 2018 webinar drew more participants than usual because it included the announcement of NERSC's new Perlmutter system, so we took advantage of the extra attention to also include a section about using MFA for web and SSH clients (including using sshproxy). (URL: \url{https://www.nersc.gov/assets/Uploads/2018-11-01-NUG-MFA-Presentation.pdf})
+The NERSC User Group (NUG) monthly webinar was another venue where we exposed
+users to MFA. The September 20, 2018 webinar included a discussion of NERSC's
+plans for the new allocation year and how to use sshproxy. (URL: \url{https://www.nersc.gov/assets/Uploads/NUG-Webinar-20180920.pdf})
+The November 1, 2018 webinar drew more participants than usual because it
+included the announcement of NERSC's new Perlmutter system, so we took
+advantage of the extra attention to also include a section about using MFA for
+web and SSH clients (including using sshproxy). (URL: \url{https://www.nersc.gov/assets/Uploads/2018-11-01-NUG-MFA-Presentation.pdf})
 
 \subsection{``NERSC User News'' Podcasts}
+\label{podcast}
 
-The weekly ``NERSC User News'' podcast
+The weekly ``NERSC User News'' podcast 
 (URL: \url{https://anchor.fm/nersc-news}) featured three episodes with NERSC
 security engineer Abe Singer:
 \begin{itemize}
@@ -618,10 +643,11 @@ security engineer Abe Singer:
 \end{itemize}
 
 \subsection{NERSC Center News Publications}
+\label{pubs}
 
-In December 2018 and January 2019, NERSC interviewed two users about their
-experiences incorporating MFA into their workflows. The December 2018
-posting featured a testimonial from a user who voluntarily enrolled in MFA
+In December 2018 and January 2019, NERSC published interviews with two users
+about their experiences incorporating MFA into their workflows. The December
+2018 posting featured a testimonial from a user who voluntarily enrolled in MFA
 at NERSC before it was made mandatory
 (URL: \url{https://www.nersc.gov/news-publications/nersc-news/nersc-center-news/2018/nersc-users-begin-implementing-mfa-for-higher-security-access-to-cori/})
 and how their use of the sshproxy service made the MFA transition minimally
