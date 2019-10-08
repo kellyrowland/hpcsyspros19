@@ -50,7 +50,7 @@ NERSC is not the first organization to implement multi-factor authentication
 (MFA) for its users, and we had seen multiple talks by other supercomputing
 facilities who had deployed MFA.  But as we planned and deployed our MFA
 implementation, we found that nobody had talked about the more interesting and
-difficult challenges, which were largely social rather technical. Our MFA
+difficult challenges, which were largely social rather than technical. Our MFA
 deployment was a success, but, more importantly, much of what we learned could
 apply to any infrastructure change. Additionally, we developed the sshproxy
 service, a key piece of infrastructure technology that lessens user and staff
@@ -168,7 +168,7 @@ that we could not change.
 
 Further, a token is supposed to be ``something that you have''. As such, it is
 also something that you can lose. Soft-tokens, in particular, are vulnerable to
-loss of or destruction of data (e.g., reformatting) on the device upon which
+the loss or destruction of data (e.g., reformatting) on the device upon which
 they are stored. Thus we wanted to allow users to have multiple active tokens so
 that they were less impacted should they e.g., lose their phone, keys, laptop.
 
@@ -190,7 +190,7 @@ Finally, as one of the largest American HPC centers, NERSC is a high-profile
 target for hackers worldwide. NERSC systems are continuously under attack and
 NERSC already devotes extensive efforts to security. We did not want to entrust
 third-party vendors with secrets such as OTP seeds or depend on a third party
-for a trusted path to authentication for concerns that this would increase the
+for a trusted path to authentication as this would increase the
 risk of third-party hacks compromising our systems.
 
 
